@@ -8,7 +8,7 @@ data_d = resp_d.json()
 data_m = resp_m.json()
 
 for i in data_d:
-    print(i['Cur_Name'], i.get('Cur_OfficialRate'))
+    print(i['Cur_Name'], i['Cur_OfficialRate'])
 
 print('\n')
 
