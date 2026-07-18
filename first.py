@@ -25,6 +25,8 @@ class Parser:
         except:
             raise requests.exceptions.RequestException
 
+#try/except
+
     def file_creator(self):
         with open('cur_today.csv', 'w', encoding='utf-8') as file:
             for idx, i in enumerate(self.result, start=1):
