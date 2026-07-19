@@ -31,7 +31,7 @@ class Parser:
         except requests.exceptions.ReadTimeout:
             print('Request timed out')
 
-    #ERROR HANDLING
+    #error handling
 
     def file_creator(self):
         with open('cur_today.csv', 'w', encoding="utf-8-sig", newline="") as file:
