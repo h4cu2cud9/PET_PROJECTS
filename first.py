@@ -22,10 +22,16 @@ class Parser:
                 self.result.append(i['Cur_Abbreviation'])
                 self.result.append(i['Cur_Name'])
                 self.result.append(i['Cur_OfficialRate'])
-        except:
-            raise requests.exceptions.RequestException
+        except requests.exceptions.ConnectionError:
+            print('Connection error')
+        except requests.exceptions.HTTPError:
+            print('HTTP error')
+        except requests.exceptions.RequestException:
+            print('Request error')
+        except requests.exceptions.ReadTimeout:
+            print('Request timed out')
 
-#try/except
+    #ERROR HANDLING
 
     def file_creator(self):
         with open('cur_today.csv', 'w', encoding="utf-8-sig", newline="") as file:
