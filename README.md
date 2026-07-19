@@ -1,6 +1,6 @@
 NBRB Currency Parser
 
-WHAT IT DOES:
+What it does:
 Fetches daily and monthly currency exchange rates from the National Bank of the Republic of Belarus API and saves them to a CSV file.
 
 Requirements:
