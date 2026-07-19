@@ -28,7 +28,7 @@ class Parser:
 #try/except
 
     def file_creator(self):
-        with open('cur_today.csv', 'w', encoding='utf-8') as file:
+        with open('cur_toda.csv', 'w', encoding="utf-8-sig", newline="") as file:
             for idx, i in enumerate(self.result, start=1):
                 file.write(str(i))
                 file.write('\n' if idx % 3 == 0 else ' ')
