@@ -40,6 +40,7 @@ class Parser:
                 file.write('\n' if idx % 3 == 0 else ' ')
 
 
+
 p = Parser(url_d, url_m, result)
 print(p.resp())
 print(p.file_creator())
