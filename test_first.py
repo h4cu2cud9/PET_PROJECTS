@@ -20,9 +20,3 @@ def test_file():
         file = csv.reader(f)
     assert pytest.raises(FileNotFoundError)
 
-
-
-
-
-
-
