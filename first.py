@@ -1,21 +1,32 @@
 import requests
+from requests_cache import CachedSession
+from datetime import datetime, timedelta
+from ratelimit import limits, sleep_and_retry
 
-url_d = "https://api.nbrb.by/exrates/rates?periodicity=0"
-url_m = "https://api.nbrb.by/exrates/rates?periodicity=1"
+now = datetime.now()
+midnight = (now + timedelta(days=1)).replace(
+    hour=0, minute=0, second=0, microsecond=0
+)
+till_midnight = midnight - now
+session = CachedSession('cache', expire_after=till_midnight, use_cache_dir=True)
 result = []
 
-class Parser:
-    def __init__(self, url_d, url_m, result):
-        self.url_d = url_d
-        self.url_m = url_m
-        self.result = result
 
+class Parser:
+    def __init__(self, result, session):
+        self.result = result
+        self.session = session
+
+    @limits(calls=15, period=900)
+    @sleep_and_retry
     def resp(self):
         try:
+            url_d = "https://api.nbrb.by/exrates/rates?periodicity=0"
+            url_m = "https://api.nbrb.by/exrates/rates?periodicity=1"
             combined = []
-            resp_d = requests.get(self.url_d)
+            resp_d = self.session.get(url_d)
             resp_d.raise_for_status()
-            resp_m = requests.get(self.url_m)
+            resp_m = self.session.get(url_m)
             resp_m.raise_for_status()
             combined = resp_d.json() + resp_m.json()
             for i in combined:
@@ -40,7 +51,6 @@ class Parser:
                 file.write('\n' if idx % 3 == 0 else ' ')
 
 
-
-p = Parser(url_d, url_m, result)
+p = Parser(result, session)
 print(p.resp())
 print(p.file_creator())
